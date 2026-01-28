@@ -1,0 +1,855 @@
+/* ===========================
+   dataset-style (global)
+   Reusable “Dataset / Culture” pages
+   Compact, consistent spacing, dark-diag safe
+   =========================== */
+
+.dataset-style {
+    width: 100%;
+    overflow-x: hidden;
+    background: #fff;
+    color: #0b0b0b;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
+        "Segoe UI Emoji";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Tokens */
+    --ds-ink: #0b0b0b;
+    --ds-dark-bg: #0f141b;
+
+    --ds-accent: #5eb3ff;
+    --ds-accent-2: #7fd8ff;
+
+    --ds-light-border: rgba(0, 0, 0, 0.08);
+    --ds-dark-border: rgba(255, 255, 255, 0.12);
+
+    --ds-light-muted: rgba(0, 0, 0, 0.62);
+    --ds-light-text: rgba(0, 0, 0, 0.78);
+    --ds-dark-muted: rgba(255, 255, 255, 0.72);
+    --ds-dark-text: rgba(255, 255, 255, 0.92);
+
+    /* Rhythm (one source of truth) */
+    --ds-pad-y: 112px;
+    --ds-title-gap: 56px;
+    /* below section title */
+    --ds-head-gap: 26px;
+    /* between title and lead */
+    --ds-lead-gap: 50px;
+    /* below lead before content */
+    --ds-grid-gap: 36px;
+
+    --ds-card-pad: 32px;
+    --ds-card-minh: 232px;
+
+    --ds-row-pad: 10px;
+    /* for lists */
+    --ds-list-gap: 14px;
+}
+
+@media (max-width: 767px) {
+    .dataset-style {
+        --ds-pad-y: 92px;
+        --ds-title-gap: 46px;
+        --ds-lead-gap: 42px;
+        --ds-grid-gap: 26px;
+        --ds-card-pad: 26px;
+        --ds-card-minh: 210px;
+    }
+}
+
+.dataset-style * {
+    box-sizing: border-box;
+}
+
+.dataset-style svg {
+    display: block;
+}
+
+/* Layout */
+.dataset-style .dataset-style-wrap {
+    width: 90%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 10;
+}
+
+@media (min-width: 1024px) {
+    .dataset-style .dataset-style-wrap {
+        width: 100%;
+    }
+}
+
+.dataset-style .dataset-style-center {
+    text-align: center;
+}
+
+/* Optional helper class used by your HTML */
+.dataset-style .content-pad {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* ======================
+   HERO
+   ====================== */
+.dataset-style .dataset-style-hero {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    background: #000;
+    overflow: hidden;
+    margin-bottom: -5rem;
+}
+
+@media (min-width: 768px) {
+    .dataset-style .dataset-style-hero {
+        min-height: 700px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .dataset-style .dataset-style-hero {
+        min-height: 85vh;
+    }
+}
+
+.dataset-style .dataset-style-heroBg {
+    position: absolute;
+    inset: 0;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: transform 0.6s ease;
+}
+
+.dataset-style .dataset-style-hero:hover .dataset-style-heroBg {
+    transform: scale(1.05);
+}
+
+.dataset-style .dataset-style-heroShade {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    transition: background 0.4s ease;
+}
+
+.dataset-style .dataset-style-hero:hover .dataset-style-heroShade {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.dataset-style .dataset-style-heroOverlay {
+    display: none;
+    /* kept for compatibility */
+}
+
+.dataset-style .dataset-style-heroContent {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 24px;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .dataset-style .dataset-style-heroContent {
+        padding: 100px 24px;
+        min-height: 700px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .dataset-style .dataset-style-heroContent {
+        min-height: 85vh;
+    }
+}
+
+.dataset-style .dataset-style-heroKicker {
+    color: #fff;
+    font-weight: 650;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    animation: kickerSlide 0.8s ease-out 0.25s both;
+}
+
+@keyframes kickerSlide {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (min-width: 768px) {
+    .dataset-style .dataset-style-heroKicker {
+        font-size: 2rem;
+    }
+}
+
+/* ======================
+   SECTION BACKGROUNDS
+   ====================== */
+.dataset-style .dataset-style-light {
+    position: relative;
+    background: #fff;
+    color: var(--ds-ink);
+}
+
+.dataset-style .dataset-style-dark {
+    position: relative;
+    color: #fff;
+    overflow: visible;
+    z-index: 1;
+}
+
+/* Your diag overlay (when present) */
+.dataset-style .diag {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -25%;
+    right: -25%;
+    background: var(--ds-dark-bg);
+    transform: rotate(-3deg);
+    z-index: 0;
+}
+
+/* Ensure content always sits above .diag */
+.dataset-style .dataset-style-dark .dataset-style-wrap,
+.dataset-style .dataset-style-dark .dataset-style-wrap * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Section padding */
+.dataset-style .dataset-style-pad-light,
+.dataset-style .dataset-style-pad-dark {
+    padding: var(--ds-pad-y) 0;
+}
+
+/* ======================
+   HEADINGS + TEXT
+   ====================== */
+.dataset-style .dataset-style-title-sm,
+.dataset-style .dataset-style-softTitle {
+    font-weight: 850;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 20px;
+    margin: 0 0 var(--ds-title-gap);
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@media (min-width: 768px) {
+
+    .dataset-style .dataset-style-title-sm,
+    .dataset-style .dataset-style-softTitle {
+        font-size: 24px;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(26px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Lead/subtitle: compact and consistent */
+.dataset-style .dataset-style-lead,
+.dataset-style .dataset-style-subtle {
+    max-width: 900px;
+    line-height: 1.7;
+    font-size: 15px;
+    margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+
+    .dataset-style .dataset-style-lead,
+    .dataset-style .dataset-style-subtle {
+        font-size: 16px;
+    }
+}
+
+.dataset-style .dataset-style-lead {
+    color: var(--ds-light-text);
+}
+
+.dataset-style .dataset-style-subtle {
+    color: var(--ds-dark-muted);
+    max-width: 100%;
+    text-align: justify;
+}
+
+/* ======================
+   GRIDS
+   ====================== */
+.dataset-style .dataset-style-grid5,
+.dataset-style .dataset-style-grid4,
+.dataset-style .dataset-style-grid2 {
+    display: grid;
+    gap: var(--ds-grid-gap);
+}
+
+.dataset-style .dataset-style-grid5 {
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+    .dataset-style .dataset-style-grid5 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .dataset-style .dataset-style-grid5 {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+}
+
+.dataset-style .dataset-style-grid4 {
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+    .dataset-style .dataset-style-grid4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .dataset-style .dataset-style-grid4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+.dataset-style .dataset-style-grid2 {
+    grid-template-columns: 1fr;
+    gap: 64px;
+    align-items: start;
+}
+
+@media (min-width: 1024px) {
+    .dataset-style .dataset-style-grid2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 88px;
+    }
+}
+
+/* ======================
+   ICON CARDS (light + dark)
+   ====================== */
+.dataset-style .dataset-style-iconCard {
+    opacity: 0;
+    animation: cardFadeIn 0.6s ease-out forwards;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    cursor: pointer;
+    border-radius: 18px;
+    padding: var(--ds-card-pad);
+    min-height: var(--ds-card-minh);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+}
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(34px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dataset-style .dataset-style-iconCard:hover {
+    transform: translateY(-6px);
+}
+
+/* Light surface */
+.dataset-style .dataset-style-light .dataset-style-iconCard {
+    background: #fff;
+    border: 1px solid var(--ds-light-border);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.08);
+}
+
+.dataset-style-light {
+    color: #000;
+}
+
+/* Dark surface */
+.dataset-style .dataset-style-dark .dataset-style-iconCard {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--ds-dark-border);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.36);
+}
+
+.dataset-style .dataset-style-iconWrap {
+    width: 64px;
+    height: 64px;
+    margin: 0 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ds-accent);
+    transition: transform 0.35s ease, color 0.35s ease;
+}
+
+.dataset-style .dataset-style-iconCard:hover .dataset-style-iconWrap {
+    transform: scale(1.1) rotate(4deg);
+    color: var(--ds-accent-2);
+}
+
+.dataset-style .dataset-style-icon {
+    width: 100%;
+    height: 100%;
+    stroke-width: 1.6;
+}
+
+.dataset-style .dataset-style-cardTitle {
+    font-size: 17px;
+    font-weight: 850;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+    transition: color 0.25s ease;
+}
+
+@media (min-width: 768px) {
+    .dataset-style .dataset-style-cardTitle {
+        font-size: 18px;
+    }
+}
+
+.dataset-style .dataset-style-cardText {
+    font-size: 14px;
+    line-height: 1.75;
+    margin: 0;
+    max-width: 360px;
+}
+
+.dataset-style .dataset-style-light .dataset-style-cardTitle {
+    color: #0b0b0b;
+}
+
+.dataset-style .dataset-style-light .dataset-style-cardText {
+    color: var(--ds-light-text);
+}
+
+.dataset-style .dataset-style-dark .dataset-style-cardTitle {
+    color: #fff;
+}
+
+.dataset-style .dataset-style-dark .dataset-style-cardText {
+    color: var(--ds-dark-muted);
+}
+
+.dataset-style .dataset-style-iconCard:hover .dataset-style-cardTitle {
+    color: var(--ds-accent);
+}
+
+/* ======================
+   SOFT SKILLS
+   ====================== */
+.dataset-style .dataset-style-softGrid {
+    display: grid;
+    gap: 72px;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+    .dataset-style .dataset-style-softGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 110px;
+    }
+}
+
+.dataset-style .dataset-style-softCol {
+    display: flex;
+    flex-direction: column;
+    gap: 54px;
+}
+
+.dataset-style .dataset-style-softRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    opacity: 0;
+    animation: slideInLeft 0.7s ease-out forwards;
+    transition: transform 0.25s ease;
+    cursor: pointer;
+    padding: 10px 0;
+}
+
+.dataset-style .dataset-style-softRow:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.dataset-style .dataset-style-softRow:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dataset-style .dataset-style-softRow:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-34px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.dataset-style .dataset-style-softRow:hover {
+    transform: translateX(7px);
+}
+
+.dataset-style .dataset-style-num {
+    color: rgba(0, 0, 0, 0.20);
+    font-weight: 900;
+    line-height: 1;
+    font-size: 72px;
+    min-width: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: -10px;
+    transition: transform 0.25s ease, color 0.25s ease;
+}
+
+@media (min-width: 768px) {
+    .dataset-style .dataset-style-num {
+        font-size: 80px;
+    }
+}
+
+.dataset-style .dataset-style-softRow:hover .dataset-style-num {
+    color: var(--ds-accent);
+    transform: scale(1.06);
+}
+
+.dataset-style .dataset-style-softLabel {
+    font-weight: 850;
+    font-size: 18px;
+    margin-bottom: 10px;
+    transition: color 0.25s ease;
+}
+
+@media (min-width: 768px) {
+    .dataset-style .dataset-style-softLabel {
+        font-size: 19px;
+    }
+}
+
+.dataset-style .dataset-style-softRow:hover .dataset-style-softLabel {
+    color: var(--ds-accent);
+}
+
+.dataset-style .dataset-style-softDesc {
+    font-size: 15px;
+    line-height: 1.75;
+    max-width: 420px;
+    color: var(--ds-light-muted);
+}
+
+@media (min-width: 768px) {
+    .dataset-style .dataset-style-softDesc {
+        font-size: 16px;
+    }
+}
+
+/* ======================
+   PROMPTS (Explore the Topic)
+   ====================== */
+.dataset-style .dataset-style-promptGrid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1fr;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .dataset-style .dataset-style-promptGrid {
+        grid-template-columns: 1fr 1fr;
+        gap: 18px 22px;
+    }
+}
+
+.dataset-style .dataset-style-promptCard {
+    appearance: none;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--ds-dark-text);
+    text-align: left;
+    width: 100%;
+    border-radius: 16px;
+    padding: 18px;
+    cursor: pointer;
+    transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    position: relative;
+    overflow: hidden;
+    max-height: fit-content;
+}
+
+.dataset-style .dataset-style-promptCard:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 12px 22px rgba(0, 0, 0, 0.32);
+}
+
+.dataset-style .dataset-style-promptRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 1rem;
+}
+
+.dataset-style .dataset-style-promptDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--ds-accent);
+    margin-top: 7px;
+    flex: 0 0 auto;
+    box-shadow: 0 0 0 6px rgba(94, 179, 255, 0.14);
+}
+
+.dataset-style .dataset-style-promptText {
+    font-weight: 750;
+    line-height: 1.35;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+@media (min-width: 768px) {
+    .dataset-style .dataset-style-promptText {
+        font-size: 16px;
+    }
+}
+
+.dataset-style .dataset-style-promptAccent {
+    position: absolute;
+    right: -40px;
+    top: -40px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(127, 216, 255, 0.35), rgba(127, 216, 255, 0));
+    transform: rotate(15deg);
+}
+
+/* ======================
+   BENEFITS / CHALLENGES (dark)
+   ====================== */
+.dataset-style .dataset-style-bcHead,
+.dataset-style .dataset-style-darkHead,
+.dataset-style .dataset-style-researchHead {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+    margin-bottom: 34px;
+}
+
+/* Compact fix for your screenshot issue:
+   keep header aligned + constrain body width + add a consistent “list rhythm” */
+.dataset-style .dataset-style-researchInner,
+.dataset-style .dataset-style-darkInner {
+    max-width: 980px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out 0.28s forwards;
+}
+
+.dataset-style .dataset-style-bcCard {
+    opacity: 0;
+    animation: fadeInScale 0.8s ease-out forwards;
+    transition: transform 0.25s ease;
+}
+
+.dataset-style .dataset-style-bcCard:nth-child(1) {
+    animation-delay: 0.18s;
+}
+
+.dataset-style .dataset-style-bcCard:nth-child(2) {
+    animation-delay: 0.36s;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.965);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.dataset-style .dataset-style-bcCard:hover {
+    transform: translateY(-4px);
+}
+
+.dataset-style .dataset-style-bcIcon,
+.dataset-style .dataset-style-darkIcon,
+.dataset-style .dataset-style-researchIcon {
+    width: 70px;
+    height: 70px;
+    flex-shrink: 0;
+    color: var(--ds-accent);
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.dataset-style .dataset-style-bcCard:hover .dataset-style-bcIcon,
+.dataset-style .dataset-style-darkInner:hover .dataset-style-darkIcon,
+.dataset-style .dataset-style-researchInner:hover .dataset-style-researchIcon {
+    transform: scale(1.06) rotate(-4deg);
+    color: var(--ds-accent-2);
+}
+
+.dataset-style .dataset-style-bcTitle,
+.dataset-style .dataset-style-darkTitle,
+.dataset-style .dataset-style-researchTitle {
+    font-weight: 900;
+    font-size: 22px;
+    line-height: 1.25;
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+
+    .dataset-style .dataset-style-bcTitle,
+    .dataset-style .dataset-style-darkTitle,
+    .dataset-style .dataset-style-researchTitle {
+        font-size: 24px;
+    }
+}
+
+/* Text bodies */
+.dataset-style .dataset-style-bcText,
+.dataset-style .dataset-style-darkList,
+.dataset-style .dataset-style-researchText {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-list-gap);
+    font-size: 15px;
+    line-height: 1.75;
+    margin: 0 auto;
+    max-width: 900px;
+    /* prevents the “super wide centered paragraphs” look */
+}
+
+@media (min-width: 768px) {
+
+    .dataset-style .dataset-style-bcText,
+    .dataset-style .dataset-style-darkList,
+    .dataset-style .dataset-style-researchText {
+        font-size: 16px;
+    }
+}
+
+/* Dark bodies */
+.dataset-style .dataset-style-dark .dataset-style-bcTitle,
+.dataset-style .dataset-style-dark .dataset-style-darkTitle {
+    color: #fff;
+}
+
+.dataset-style .dataset-style-dark .dataset-style-bcText,
+.dataset-style .dataset-style-dark .dataset-style-darkList {
+    color: var(--ds-dark-muted);
+}
+
+/* Light bodies */
+.dataset-style .dataset-style-light .dataset-style-researchTitle {
+    color: #000;
+}
+
+.dataset-style .dataset-style-light .dataset-style-researchText {
+    color: var(--ds-light-text);
+}
+
+/* Row styling for all these lists (fixes your Research Tips spacing + alignment) */
+.dataset-style .dataset-style-bcText>div,
+.dataset-style .dataset-style-darkList>div,
+.dataset-style .dataset-style-researchText>div {
+    padding: var(--ds-row-pad) 0 var(--ds-row-pad) 16px;
+    border-left: 3px solid transparent;
+    transition: padding-left 0.22s ease, border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+    border-radius: 10px;
+}
+
+/* Hover (dark) */
+.dataset-style .dataset-style-dark .dataset-style-bcText>div:hover,
+.dataset-style .dataset-style-dark .dataset-style-darkList>div:hover {
+    border-left-color: var(--ds-accent);
+    padding-left: 24px;
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* Hover (light) */
+.dataset-style .dataset-style-light .dataset-style-researchText>div:hover {
+    border-left-color: var(--ds-accent);
+    padding-left: 24px;
+    color: rgba(0, 0, 0, 0.92);
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.dataset-style .dataset-style-strong,
+.dataset-style .dataset-style-darkStrong {
+    font-weight: 850;
+}
+
+/* In dark sections, strong should be white */
+.dataset-style .dataset-style-dark .dataset-style-strong,
+.dataset-style .dataset-style-dark .dataset-style-darkStrong {
+    color: #fff;
+}
+
+/* In light sections, strong should be ink */
+.dataset-style .dataset-style-light .dataset-style-strong {
+    color: #000;
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+.dataset-style .dataset-style-promptGrid {
+  align-items: start; /* stop row-stretch visual weirdness */
+}
+
+.dataset-style .dataset-style-promptCard {
+  align-self: start;
+}
