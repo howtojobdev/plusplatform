@@ -4,7 +4,6 @@ import Navbar from "@/features/laningPage/presentation/Navbar";
 import { getUserFeed } from "@/features/laningPage/service/getUserFeed.server";
 
 const App = async () => {
-
     return (
         <>
             <Navbar></Navbar>
