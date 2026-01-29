@@ -1,12 +1,15 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { InfiniteDraggableCarousel } from "./InfiniteDraggableCarousel";
 import { FeedItemCard } from "./FeedItemCard";
 import { ClassType } from "@/features/class/domain/classType";
 import { ContentType } from "@/features/content/domain/contentType";
 import { UserFeedItemType } from "../../domain/userFeedType";
-import { NETFLIX_COMPACT_CARD_HEIGHT, NETFLIX_COMPACT_CARD_WIDTH } from "@/shared/components/NetflixCard/config";
+import {
+    NETFLIX_COMPACT_CARD_HEIGHT,
+    NETFLIX_COMPACT_CARD_WIDTH,
+} from "@/shared/components/NetflixCard/config";
+import { DraggableCarousel } from "./DraggableCarousel";
 
 type HydratedFeedItem = UserFeedItemType & { data: ClassType | ContentType };
 
@@ -45,22 +48,23 @@ export const FeedSectionCarousel = ({ items, seed, pageKey }: Props) => {
     }, [items, seed]);
 
     return (
-        <InfiniteDraggableCarousel
-            items={finalItems}
-            itemWidthPx={NETFLIX_COMPACT_CARD_WIDTH}
-            itemHeightPx={NETFLIX_COMPACT_CARD_HEIGHT}
-            gapPx={4}
-            cycles={11}
-            overscan={16}
-            renderItem={(item, baseIndex, virtualIndex) => (
-                <div className="h-full">
+        <DraggableCarousel className="py-1">
+            {finalItems.map((item, index) => (
+                <div
+                    key={`${pageKey}-${item.type}-${item.contentId}-${index}`}
+                    style={{
+                        width: NETFLIX_COMPACT_CARD_WIDTH,
+                        height: NETFLIX_COMPACT_CARD_HEIGHT,
+                        flex: "0 0 auto",
+                    }}
+                    className="h-full"
+                >
                     <FeedItemCard
-                        key={`${pageKey}-${item.type}-${item.contentId}-${virtualIndex}`}
                         item={item}
-                        instanceId={`${pageKey}-${virtualIndex}`}
+                        instanceId={`${pageKey}-${index}`}
                     />
                 </div>
-            )}
-        />
+            ))}
+        </DraggableCarousel>
     );
 };

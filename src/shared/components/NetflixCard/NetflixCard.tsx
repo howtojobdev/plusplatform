@@ -245,7 +245,7 @@ export const NetflixCard = (<T,>({
                         {showSkeleton && !imgReady ? (
                             <div
                                 className={cn(
-                                    "absolute inset-0 z-10 overflow-hidden",
+                                    "absolute inset-0 z-10 overflow-hidden pointer-events-none",
                                     UI_ELEMENT_ROUNDNESS,
                                     skeletonClassName ?? ""
                                 )}
@@ -259,7 +259,7 @@ export const NetflixCard = (<T,>({
                             src={normalImg}
                             alt={title}
                             className={cn(
-                                "w-full h-full relative z-20 object-cover block",
+                                "w-full h-full relative z-20 object-cover block pointer-events-none",
                                 UI_ELEMENT_ROUNDNESS,
                                 imgReady ? "opacity-100" : "opacity-0"
                             )}
@@ -273,13 +273,11 @@ export const NetflixCard = (<T,>({
                         />
 
                         {renderNormalOverlay ? (
-                            <div className="absolute inset-0 z-30 pointer-events-none">
-                                {renderNormalOverlay({ item, compact })}
-                            </div>
+                            <div className="absolute inset-0 z-30 pointer-events-none">{renderNormalOverlay({ item, compact })}</div>
                         ) : null}
 
                         <button
-                            className="absolute inset-0 z-40"
+                            className="absolute inset-0 z-50 pointer-events-auto"
                             aria-label={`Open ${title}`}
                             onClick={open}
                             type="button"

@@ -21,7 +21,6 @@ export const DraggableCarousel = ({ children, className }: Props) => {
         const el = ref.current;
         if (!el) return;
 
-        // Only left mouse button drags; touch/pen always ok
         if (e.pointerType === "mouse" && e.button !== 0) return;
 
         pointerDownRef.current = true;
@@ -30,7 +29,6 @@ export const DraggableCarousel = ({ children, className }: Props) => {
 
         setIsDragging(false);
 
-        // This is the key: capture pointer so move/up keep coming even over children
         el.setPointerCapture(e.pointerId);
     };
 
@@ -40,12 +38,10 @@ export const DraggableCarousel = ({ children, className }: Props) => {
 
         const dx = e.clientX - startXRef.current;
 
-        // Enter dragging only after user commits (threshold)
         if (!isDragging && Math.abs(dx) >= DRAG_THRESHOLD_PX) {
             setIsDragging(true);
         }
 
-        // Only prevent default once we are dragging
         if (isDragging) {
             e.preventDefault();
             el.scrollLeft = startScrollLeftRef.current - dx;
@@ -55,7 +51,6 @@ export const DraggableCarousel = ({ children, className }: Props) => {
     const endDrag = () => {
         pointerDownRef.current = false;
 
-        // If we dragged, we keep isDragging true for this tick to kill the click
         if (isDragging) {
             window.setTimeout(() => setIsDragging(false), 0);
         } else {
@@ -69,13 +64,23 @@ export const DraggableCarousel = ({ children, className }: Props) => {
 
         try {
             el.releasePointerCapture(e.pointerId);
-        } catch {
-            // ignore if not captured
-        }
+        } catch { }
+
         endDrag();
     };
 
-    const onPointerCancel = () => endDrag();
+    const onWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+        const el = ref.current;
+        if (!el) return;
+
+        const absX = Math.abs(e.deltaX);
+        const absY = Math.abs(e.deltaY);
+
+        if (absY > absX) {
+            el.scrollLeft += e.deltaY;
+            e.preventDefault();
+        }
+    };
 
     return (
         <div
@@ -86,19 +91,21 @@ export const DraggableCarousel = ({ children, className }: Props) => {
                 "select-none",
                 "[-ms-overflow-style:none] [scrollbar-width:none]",
                 "[&::-webkit-scrollbar]:hidden",
-                // Important for touch: allow vertical page scroll, we handle horizontal when dragging
                 "touch-pan-y",
                 className ?? "",
             ].join(" ")}
+            style={{
+                scrollBehavior: "smooth",
+                WebkitOverflowScrolling: "touch",
+            }}
+            onWheel={onWheel}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
-            onPointerCancel={onPointerCancel}
+            onPointerCancel={endDrag}
             onPointerLeave={() => {
-                // pointer capture should handle this, but keep it safe
                 if (pointerDownRef.current) endDrag();
             }}
-            // Kill clicks that happen after a drag gesture
             onClickCapture={(e) => {
                 if (isDragging) {
                     e.preventDefault();
@@ -106,8 +113,7 @@ export const DraggableCarousel = ({ children, className }: Props) => {
                 }
             }}
         >
-            {/* While dragging: children cannot receive pointer events -> no hover/click reactions */}
-            <div className={`flex gap-3 w-max pr-2 ${isDragging ? "pointer-events-none" : ""}`}>
+            <div className={`flex gap-2 w-max pr-2 ${isDragging ? "pointer-events-none" : ""}`}>
                 {children}
             </div>
         </div>

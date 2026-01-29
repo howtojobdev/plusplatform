@@ -6,7 +6,12 @@ import { useRouter } from "next/navigation";
 import BrandButton from "@/shared/components/BrandButton";
 import { NetflixCard, NetflixCardGetters } from "@/shared/components/NetflixCard/NetflixCard";
 import { ContentType } from "@/features/content/domain/contentType";
-import { formatTimeFromMinString, getValidDateFromString, parseDuration, formatBrandDate } from "@/shared/utils/helperFunctions";
+import {
+    formatTimeFromMinString,
+    getValidDateFromString,
+    parseDuration,
+    formatBrandDate,
+} from "@/shared/utils/helperFunctions";
 import { CONTENT_TYPES_ENUM } from "@/shared/enums";
 import { BookmarkButton } from "@/features/user/presentation/BookmarkButton";
 import { NETFLIX_COMPACT_CARD_HEIGHT, NETFLIX_COMPACT_CARD_WIDTH } from "@/shared/components/NetflixCard/config";
@@ -37,7 +42,10 @@ export const ContentCardItem = ({
     const router = useRouter();
     const [modalOpen, setModalOpen] = useState(false);
 
-    const releaseYear = useMemo(() => getValidDateFromString(contentItem.createdAt).getFullYear(), [contentItem.createdAt]);
+    const releaseYear = useMemo(
+        () => getValidDateFromString(contentItem.createdAt).getFullYear(),
+        [contentItem.createdAt]
+    );
 
     const { width, height } = useGetCardSize();
 
@@ -57,11 +65,27 @@ export const ContentCardItem = ({
             aspectRatio={compact ? undefined : "16 / 9"}
             onOpen={() => setModalOpen(true)}
             renderHoverBottomOverlay={() => (
-                <div className="flex items-center justify-start gap-2">
-                    <BrandButton onClick={() => setModalOpen(true)} type="button">
+                <div
+                    className="flex items-center justify-start gap-2"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
+                >
+                    <BrandButton
+                        onClick={() => {
+                            setModalOpen(true);
+                        }}
+                        type="button"
+                    >
                         <Play size={12} />
                     </BrandButton>
-                    <BookmarkButton bookmarkId={contentItem.id} compact />
+                    <div
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
+                    >
+                        <BookmarkButton bookmarkId={contentItem.id} compact />
+                    </div>
                 </div>
             )}
             renderHoverDetails={() => (
@@ -125,7 +149,9 @@ export const ContentCardItem = ({
                         <div className="mt-4 text-sm">
                             <div className="text-white/70">Tags:</div>
                             <div className="text-white/90 capitalize">
-                                {(contentItem.genre ?? []).length ? (contentItem.genre ?? []).join(" • ") : `${contentItem.type} • ${releaseYear}`}
+                                {(contentItem.genre ?? []).length
+                                    ? (contentItem.genre ?? []).join(" • ")
+                                    : `${contentItem.type} • ${releaseYear}`}
                             </div>
 
                             <div className="mt-3 text-white/70">Last Visited:</div>

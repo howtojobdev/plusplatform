@@ -156,7 +156,7 @@ export const NetflixCardHoverView = ({
                     >
                         <div style={{ height: placement.height }} className="relative">
                             {showSkeleton && !imgReady ? (
-                                <div className={cn("absolute inset-0 z-10 overflow-hidden", UI_ELEMENT_ROUNDNESS)}>
+                                <div className={cn("absolute inset-0 z-10 overflow-hidden pointer-events-none", UI_ELEMENT_ROUNDNESS)}>
                                     <div className="absolute inset-0 bg-white/5" />
                                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse" />
                                 </div>
@@ -166,7 +166,7 @@ export const NetflixCardHoverView = ({
                                 src={imageSrc}
                                 alt={title}
                                 className={cn(
-                                    "w-full h-full object-cover block relative z-20",
+                                    "w-full h-full object-cover block relative z-20 pointer-events-none",
                                     UI_ELEMENT_ROUNDNESS,
                                     imgReady ? "opacity-100" : "opacity-0"
                                 )}
@@ -178,15 +178,16 @@ export const NetflixCardHoverView = ({
                                 onLoad={() => setImgReady(true)}
                                 onError={() => setImgReady(true)}
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+
+                            <div className="absolute inset-0 z-30 bg-gradient-to-t from-black/75 via-black/15 to-transparent pointer-events-none" />
 
                             {bottomOverlay ? (
-                                <div className="absolute bottom-3 left-3 right-3 z-30">{bottomOverlay}</div>
+                                <div className="absolute bottom-3 left-3 right-3 z-50">{bottomOverlay}</div>
                             ) : null}
 
                             <button
                                 type="button"
-                                className="absolute inset-0 z-20"
+                                className="absolute inset-0 z-40 pointer-events-auto"
                                 aria-label={`Open ${title}`}
                                 onClick={onClick}
                             />

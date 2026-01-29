@@ -63,8 +63,18 @@ export const ClassCardItem = ({ classItem, compact = false, instanceId }: Props)
             cardHeightPx={NETFLIX_COMPACT_CARD_HEIGHT}
             onOpen={() => setModalOpen(true)}
             renderHoverBottomOverlay={() => (
-                <div className="flex items-center gap-2">
-                    <BrandButton onClick={() => setModalOpen(true)} type="button">
+                <div
+                    className="flex items-center gap-2"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
+                >
+                    <BrandButton
+                        onClick={() => {
+                            setModalOpen(true);
+                        }}
+                        type="button"
+                    >
                         <Play size={12} />
                     </BrandButton>
                     <div className="ml-auto text-xs text-white/80 px-2 py-1 rounded bg-white/15">
