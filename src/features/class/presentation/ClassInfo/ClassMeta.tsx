@@ -44,9 +44,9 @@ export const ClassMeta = ({
                 <BookmarkButton bookmarkId={classId}></BookmarkButton>
             </div>
             <Separator></Separator>
-            <div className="max-w-lg">
+            {/* <div className="max-w-lg">
                 <ProgressBar progress={progress}></ProgressBar>
-            </div>
+            </div> */}
         </div>
     )
 };

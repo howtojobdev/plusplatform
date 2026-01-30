@@ -4,7 +4,7 @@ import React, { useMemo, useState } from "react";
 import type { FaqContentBlockType } from "../../domain/contentBlockType";
 import { UI_ELEMENT_ROUNDNESS } from "@/shared/constants/ui";
 import { cn } from "@/shared/utils/cn";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 
 type Props = {
     block: FaqContentBlockType;
@@ -31,6 +31,26 @@ export const FaqBlock = ({ block }: Props) => {
         setOpen((current) => (current === idx ? null : idx));
     };
 
+    const containerVariants: Variants = {
+        hidden: {},
+        show: {
+            transition: {
+                staggerChildren: reduceMotion ? 0 : 0.06,
+            },
+        },
+    };
+
+    const itemVariants: Variants = {
+        hidden: { opacity: 0, y: 10 },
+        show: {
+            opacity: 1,
+            y: 0,
+            transition: reduceMotion
+                ? { duration: 0 }
+                : { type: "spring", stiffness: 420, damping: 34 },
+        },
+    };
+
     return (
         <section className="colored-block">
             <div className="content-pad">
@@ -48,18 +68,20 @@ export const FaqBlock = ({ block }: Props) => {
                             UI_ELEMENT_ROUNDNESS,
                         )}
                     >
-                        <div className="space-y-3 sm:space-y-4">
+                        <motion.div
+                            className="space-y-3 sm:space-y-4"
+                            variants={containerVariants}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, amount: 0.15, margin: "200px 0px" }}
+                        >
                             {items.map((item, idx) => {
                                 const isOpen = open === idx;
 
                                 return (
-                                    <div
+                                    <motion.div
                                         key={`${idx}-${item.question}`}
-                                        className={cn(
-                                            "opacity-0 translate-y-2",
-                                            "animate-in fade-in slide-in-from-bottom-2 duration-300",
-                                            "motion-reduce:animate-none motion-reduce:opacity-100 motion-reduce:translate-y-0",
-                                        )}
+                                        variants={itemVariants}
                                     >
                                         <motion.button
                                             type="button"
@@ -71,22 +93,7 @@ export const FaqBlock = ({ block }: Props) => {
                                                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30",
                                                 UI_ELEMENT_ROUNDNESS,
                                             )}
-                                            animate={
-                                                reduceMotion
-                                                    ? undefined
-                                                    : {
-                                                        y: isOpen ? [0, -10, 0] : [0, -10, 0],
-                                                    }
-                                            }
-                                            transition={
-                                                reduceMotion
-                                                    ? undefined
-                                                    : {
-                                                        duration: 0.22,
-                                                        ease: "easeOut",
-                                                        times: [0, 0.55, 1],
-                                                    }
-                                            }
+                                            whileTap={reduceMotion ? undefined : { scale: 0.995 }}
                                         >
                                             <div className="px-5 py-4 border-b border-black/10">
                                                 <div className="flex items-start justify-between gap-4">
@@ -146,10 +153,10 @@ export const FaqBlock = ({ block }: Props) => {
                                                 />
                                             </div>
                                         </motion.button>
-                                    </div>
+                                    </motion.div>
                                 );
                             })}
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>

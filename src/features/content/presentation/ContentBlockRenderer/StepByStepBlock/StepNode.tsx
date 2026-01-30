@@ -4,6 +4,7 @@ import React from "react";
 import type { StepContentBlockItemType } from "../../../domain/contentBlockType";
 import { UI_ELEMENT_ROUNDNESS } from "@/shared/constants/ui";
 import { cn } from "@/shared/utils/cn";
+import { motion } from "framer-motion";
 
 const norm = (s?: string) => (s ?? "").trim().toLowerCase();
 
@@ -21,14 +22,16 @@ export const StepNode = ({ step, i, isLast }: StepNodeProps) => {
     return (
         <div className="group relative grid grid-cols-[44px_1fr] gap-4">
             <div className="relative flex flex-col items-center">
-                <div
+                <motion.div
+                    whileHover={{ y: -2 }}
+                    transition={{ type: "spring", stiffness: 420, damping: 28 }}
                     className={cn(
-                        "h-10 w-10 bg-black/5 ring-1 ring-black/15 flex items-center justify-center shadow-sm transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:shadow-md",
+                        "h-10 w-10 bg-black/5 ring-1 ring-black/15 flex items-center justify-center shadow-sm group-hover:shadow-md",
                         UI_ELEMENT_ROUNDNESS,
                     )}
                 >
                     <span className="text-sm font-semibold text-black">{i + 1}</span>
-                </div>
+                </motion.div>
 
                 {!isLast && (
                     <div className="mt-3 w-[2px] flex-1 rounded-full bg-black/15 transition-colors duration-200 group-hover:bg-black/25" />
@@ -36,9 +39,11 @@ export const StepNode = ({ step, i, isLast }: StepNodeProps) => {
             </div>
 
             <div className="min-w-0 pb-8 cursor-pointer">
-                <div
+                <motion.div
+                    whileHover={{ y: -2 }}
+                    transition={{ type: "spring", stiffness: 420, damping: 30 }}
                     className={cn(
-                        "bg-white ring-1 ring-black/15 shadow-sm overflow-hidden transition-all duration-200 group-hover:ring-black/25 group-hover:shadow-md group-hover:-translate-y-0.5",
+                        "bg-white ring-1 ring-black/15 shadow-sm overflow-hidden group-hover:ring-black/25 group-hover:shadow-md",
                         UI_ELEMENT_ROUNDNESS,
                     )}
                 >
@@ -66,7 +71,7 @@ export const StepNode = ({ step, i, isLast }: StepNodeProps) => {
                     <div className="h-1 w-full bg-black/5">
                         <div className="h-full w-0 bg-black/40 transition-all duration-300 group-hover:w-full" />
                     </div>
-                </div>
+                </motion.div>
             </div>
         </div>
     );

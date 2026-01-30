@@ -1,4 +1,3 @@
-// src/app/features/user/presentation/CourseWorkView/TopCards.tsx
 "use client";
 
 import { useMemo } from "react";
@@ -8,7 +7,7 @@ import type { ContentType } from "@/features/content/domain/contentType";
 import type { ClassType } from "@/features/class/domain/classType";
 
 import { ContentCardItem } from "@/features/content/presentation/ContentCardItem";
-import { ClassInfo } from "@/features/class/presentation/ClassInfo";
+import { ClassCardItem } from "@/features/class/presentation/ClassCardItem";
 
 const isClassItem = (t: string) => {
     const x = String(t ?? "").toLowerCase();
@@ -63,7 +62,7 @@ export const TopCards = ({
             {classes.length ? (
                 <div className="flex flex-wrap gap-3 overflow-visible scrollbar">
                     {classes.map((cl) => (
-                        <ClassInfo key={cl.id} classData={cl} />
+                        <ClassCardItem key={cl.id} classItem={cl} />
                     ))}
                 </div>
             ) : null}

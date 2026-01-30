@@ -18,22 +18,36 @@ type HydratedFeedItem<T> = UserFeedItemType & { data: T };
 type FinalUserFeedMap = Record<string, Array<HydratedFeedItem<ClassType | ContentType>>>;
 
 export const getUserFeed = async (): Promise<FinalUserFeedMap | null> => {
-    const res = await fetch(`${httpAccessConfig.mainUrl}/appConfig/getAll`, {
-        method: "GET",
-        headers: httpAccessConfig.mainHeaders,
-        next: { revalidate: httpAccessConfig.revalidateTime },
-    });
+    const fetchAppConfigFeedMap = async (): Promise<AppConfigFeedMapResponse | null> => {
+        const res = await fetch(`${httpAccessConfig.mainUrl}/appConfig/getAll`, {
+            method: "GET",
+            headers: httpAccessConfig.mainHeaders,
+            next: { revalidate: httpAccessConfig.revalidateTime },
+        });
 
-    let resolvedData: ApiResponseType<{ feedMap: AppConfigFeedMapResponse }[]>;
-    try {
-        resolvedData = (await res.json()) as ApiResponseType<{ feedMap: AppConfigFeedMapResponse }[]>;
-    } catch {
-        return null;
+        let resolvedData: ApiResponseType<{ feedMap: AppConfigFeedMapResponse }[]>;
+        try {
+            resolvedData = (await res.json()) as ApiResponseType<{ feedMap: AppConfigFeedMapResponse }[]>;
+        } catch {
+            return null;
+        }
+
+        if (!res.ok || !resolvedData.successful || !resolvedData.data?.length) return null;
+
+        const feedMap = resolvedData.data[0].feedMap;
+        if (!feedMap) return null;
+
+        return feedMap;
+    };
+
+    let feedMap: AppConfigFeedMapResponse | null = null;
+
+    for (let attempt = 1; attempt <= 2; attempt++) {
+        feedMap = await fetchAppConfigFeedMap();
+        if (feedMap) break;
+        if (attempt < 2) await new Promise((r) => setTimeout(r, 300));
     }
 
-    if (!res.ok || !resolvedData.successful || !resolvedData.data?.length) return null;
-
-    const feedMap = resolvedData.data[0].feedMap;
     if (!feedMap) return null;
 
     const classIdsSet = new Set<string>();
@@ -59,9 +73,7 @@ export const getUserFeed = async (): Promise<FinalUserFeedMap | null> => {
     const classById = new Map<string, ClassType>(classes.map((c) => [String(c.id), c]));
     const contentById = new Map<string, ContentType>(contents.map((c) => [String(c.id), c]));
 
-    const sortedEntries = Object.entries(feedMap).sort(
-        ([, a], [, b]) => (a.index ?? 0) - (b.index ?? 0)
-    );
+    const sortedEntries = Object.entries(feedMap).sort(([, a], [, b]) => (a.index ?? 0) - (b.index ?? 0));
 
     const finalFeedMap: FinalUserFeedMap = {};
 
@@ -77,9 +89,7 @@ export const getUserFeed = async (): Promise<FinalUserFeedMap | null> => {
 
                 return { ...item, data };
             })
-            .filter(
-                (v): v is HydratedFeedItem<ClassType | ContentType> => v !== null
-            );
+            .filter((v): v is HydratedFeedItem<ClassType | ContentType> => v !== null);
     }
 
     return finalFeedMap;

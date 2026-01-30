@@ -51,6 +51,7 @@ export const PointsOfPurposeBlock = ({ block }: Props) => {
                                 const isActive = activeIndex === index;
                                 return (
                                     <PurposeTitleButton
+                                        key={item.title+index.toString()}
                                         index={index}
                                         isActive={isActive}
                                         title={item.title}

@@ -20,9 +20,10 @@ export const BookmarkButton = ({ bookmarkId, compact = false }: Props) => {
         <BrandButton
             variant="outline"
             onClick={handleBookmark}
+            size="sm"
         >
             <Bookmark
-                size={12}
+                size={10}
                 fill={
                     isBookmarked
                         ? "currentColor"

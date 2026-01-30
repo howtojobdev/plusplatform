@@ -95,8 +95,7 @@ export const authOptions: AuthOptions = {
 
     pages: {
         signIn: "/login",
-        newUser: "/signup",
-        error: "/error",
+        newUser: "/signup"
     },
 
     callbacks: {

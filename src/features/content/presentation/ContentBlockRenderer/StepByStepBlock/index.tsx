@@ -5,6 +5,7 @@ import type { StepByStepContentBlockType } from "../../../domain/contentBlockTyp
 import { UI_ELEMENT_ROUNDNESS } from "@/shared/constants/ui";
 import { cn } from "@/shared/utils/cn";
 import { StepNode } from "./StepNode";
+import { motion, type Variants } from "framer-motion";
 
 type Props = {
     block: StepByStepContentBlockType;
@@ -24,6 +25,18 @@ export const StepByStepBlock = ({ block }: Props) => {
     );
 
     if (!steps.length) return null;
+
+    const itemVariants = (i: number): Variants => ({
+        hidden: { opacity: 0, y: 10 },
+        show: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                y: { type: "spring", stiffness: 420, damping: 34, delay: i * 0.06 },
+                opacity: { duration: 0.28, ease: "easeOut", delay: i * 0.06 },
+            },
+        },
+    });
 
     return (
         <section className="colored-block">
@@ -48,20 +61,19 @@ export const StepByStepBlock = ({ block }: Props) => {
                     >
                         <div className="space-y-0">
                             {steps.map((step, i) => (
-                                <div
+                                <motion.div
                                     key={`${i}-${step.question}-${step.answer}`}
-                                    className={cn(
-                                        "opacity-0 translate-y-2",
-                                        "animate-in fade-in slide-in-from-bottom-2 duration-300",
-                                        "motion-reduce:animate-none motion-reduce:opacity-100 motion-reduce:translate-y-0",
-                                    )}
+                                    initial="hidden"
+                                    whileInView="show"
+                                    viewport={{ once: true, amount: 0.15, margin: "200px 0px" }}
+                                    variants={itemVariants(i)}
                                 >
                                     <StepNode
                                         step={step}
                                         i={i}
                                         isLast={i === steps.length - 1}
                                     />
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
                     </div>

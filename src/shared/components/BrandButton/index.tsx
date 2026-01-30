@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { PointerEvent } from "react";
 import { UI_ELEMENT_ROUNDNESS } from "@/shared/constants/ui";
 import { BUTTON_SIZES, BUTTON_VARIANTS, type BrandButtonSize, type BrandButtonVariant } from "./config";
 
 type BrandButtonProps = {
     children: React.ReactNode;
-    onClick?: () => void;
+    onClick?: (e?: PointerEvent<HTMLButtonElement>) => void;
     size?: BrandButtonSize;
     variant?: BrandButtonVariant;
     fullWidth?: boolean;
@@ -48,7 +48,7 @@ export default function BrandButton({
             ? "text-[var(--primary-bg)]"
             : "text-[var(--primary-font)]";
 
-    const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
+    const handlePointerDown = (e: PointerEvent<HTMLButtonElement>) => {
         if (isBlocked) return;
 
         const btn = e.currentTarget;
@@ -77,13 +77,13 @@ export default function BrandButton({
         });
         r.addEventListener("transitionend", () => r.remove(), { once: true });
 
-        onClick?.();
+        onClick?.(e);
     };
 
     return (
         <button
             type={type}
-            onPointerDown={handlePointerDown}
+            onPointerDown={(e) => handlePointerDown(e)}
             disabled={isBlocked}
             className={[
                 base,
